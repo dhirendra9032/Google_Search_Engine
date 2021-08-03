@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Google Search</title>
+    <style>
+        .logo{
+          width: 150px;
+          float: left;
+ 
+}
+.bar{
+  float: left;
+  margin:auto;
+  margin-left: 50px;
+  width:950px;
+  border-radius:30px;
+  border:1px solid #5f5d5d;
+}
+.bar:hover{
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.bar:focus-within{
+  box-shadow: 1px 1px 8px 1px #c9c8c8;
+  outline:none;
+}
+.searchbar{
+  height:45px;
+  border:none;
+  margin-left: 30px;
+  border-radius: 30px;
+  width:900px;
+  font-size:20px;
+  outline: none;
+  
+}
+.voice{
+  height:20px;
+  position:relative;
+  top:5px;
+  left:10px;
+}
+.buttons{
+  margin-top:30px;
+}
+.button{
+  background-color: #eeebeb;
+  border:1px rgb(27, 27, 27);
+  color:#707070;
+  font-size:15px;
+  padding: 10px 20px;
+  margin:5px;
+  border-radius:4px;
+  outline:none;
+}
+.button:hover{
+  border: 1px solid #c8c8c8;
+  padding: 9px 19px;
+  color:#808080;
+}
+.button:focus{
+  border:1px solid #4885ed;
+  padding: 9px 19px;
+}
+#data{
+ 
+  padding: 30px;
+}
+
+
+    </style>
+</head>
+<body>
+   <div style="width: 100%;">
+      <div class="logo">
+        <img alt="Google" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" width="150px">
+      </div>
+      <div class="bar">
+        <input class="searchbar" type="text" title="Search" id="search">
+        
+      </div>
+      <div class="buttons">
+        <button class="button" type="button" onclick="searchData()">Google Search</button>
+      
+      </div>
+   </div>
+   <div style="clear: both;"></div>
+   <div id="data"></div>
+
+   
+</body>
+
+</html>
+<script>
+  async function searchData(){
+
+    let data_div=document.getElementById('data');
+      let searchInp=document.getElementById('search').value;
+
+      let res=await fetch(`http://api.serpstack.com/search?access_key=f4cd2f31ddefc14c9536c1399ce14199&type=web&query=${searchInp}`)
+       let data=await res.json();
+
+      console.log('data',data )
+      data.organic_results.forEach(res=>{
+        let h1=document.createElement('h1');
+        h1.innerHTML=res.title;
+        let urle=document.createElement('a');
+        urle.href=res.url;
+        urle.innerHTML=res.url;
+
+        let p=document.createElement('p');
+        p.innerHTML=res.snippet;
+
+        data_div.append(h1,urle,p);
+
+
+       
+
+      });
+
+
+  }
+
+  
+    
+
+</script>

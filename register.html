@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: rgb(16, 15, 46);
+        }
+
+        .login {
+            width: 400px;
+            margin: 16px auto;
+            font-size: 16px;
+
+        }
+
+        /* Reset top and bottom margins from certain elements */
+        .login-header,
+        .login p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* The triangle form is achieved by a CSS hack */
+        .login-triangle {
+            width: 0;
+            margin-right: auto;
+            margin-left: auto;
+            border: 12px solid transparent;
+            border-bottom-color: rgb(245, 136, 35);
+        }
+
+        .login-header {
+            background: rgb(245, 136, 35);
+            padding: 20px;
+            font-size: 1.4em;
+            font-weight: normal;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .login-container {
+            background: #abf4f7;
+            padding: 12px;
+        }
+
+        /* Every row inside .login-container is defined with p tags */
+        .login p {
+            padding: 12px;
+        }
+
+        .login input {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            border-width: 1px;
+           
+            padding: 12px;
+            outline: 0;
+            font-family: inherit;
+            font-size: 0.95em;
+        }
+
+        .login input[type="email"],
+        .login input[type="password"] {
+            background: #fff;
+            border-color: #bbb;
+            color: #555;
+        }
+
+        /* Text fields' focus effect */
+        .login input[type="email"]:focus,
+        .login input[type="password"]:focus {
+            border-color: #888;
+        }
+
+        .login input[type="submit"] {
+            background: #28d;
+            border-color: transparent;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .login input[type="submit"]:hover {
+            background: #17c;
+        }
+
+        /* Buttons' focus effect */
+        .login input[type="submit"]:focus {
+            border-color: #05a;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="login">
+      
+
+        <h2 class="login-header">Register</h2>
+
+        <form class="login-container" onsubmit="Register(event)">
+            <p><input type="text" placeholder="Name" id="inp1"></p>
+            <p><input type="email" placeholder="Email" id="inp2"></p>
+            <p><input type="text" placeholder="Username" id="inp3"></p>
+            <p><input type="password" placeholder="Password" id="inp4"></p>
+            <p><input type="number" placeholder="Mobile" id="inp5"></p>
+            <p><input type="text" placeholder="Description" id="inp6"></p>
+           
+            <p ><input type="submit" value="Submit" onclick="window.location.href='login.html'" onsubmit="Register(event)"></p>
+        </form>
+    </div>
+</body>
+
+</html>
+<script>
+
+     function Register(e) {
+            e.preventDefault();
+
+            let formdata = {
+                name: document.getElementById('inp1').value,
+                email: document.getElementById('inp2').value,
+                password: document.getElementById('inp3').value,
+                username: document.getElementById('inp4').value,
+                mobile: document.getElementById('inp5').value,
+                description: document.getElementById('inp6').value
+            };
+            formdata = JSON.stringify(formdata);
+
+
+            fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
+                method: 'POST',
+
+                body: formdata,
+
+                headers: {
+
+                    "Content-Type": "application/json",
+
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((res) => {
+                    console.log("res:", res);
+                })
+                .catch((err) => {
+                    console.log("err:", err);
+                });
+
+                alert("Registration Successful!");
+        }
+
+
+</script>
